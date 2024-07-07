@@ -17,9 +17,21 @@
      referrerpolicy="no-referrer"
    />
   </head>
-  <body class="dark:bg-gray-900 bg-gray-300 dark:text-white">
+  <body class="dark:bg-green-900 bg-pink-100 dark:text-white">
 <!-- Header start-->
-    <div data-th-replace="~{navbar :: navbar}"></div>
+ 
+  <div th:if="${loggedInEmployee}">
+    <div data-th-replace="~{employee/employeenavbar::employeenavbar}"></div>
+  </div>
+  <div th:if="${loggedInEmployee}">
+    <div data-th-replace="~{employee/sidebar::sidebar}"></div>
+  </div>
+
+  <!-- user is not logged : navbar -->
+  <div th:unless="${loggedInEmployee}">
+    <div data-th-replace="~{base/navbar :: navbar}"></div>
+  </div>
+    
     <!-- Header end-->
 
      <!-- Main content start-->

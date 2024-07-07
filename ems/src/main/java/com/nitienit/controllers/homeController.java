@@ -32,27 +32,14 @@ public class homeController {
    
     @GetMapping({"","/","/home"})
     public String home(){
-        return "home";
-    }
-
-    @GetMapping("/about")
-    public String about(){
-        return "about";
-    }
-
-    @GetMapping("/service")
-    public String service(){
-        return "service";
-    }
-
-    @GetMapping("/contact")
-    public String contact(){
-        return "contact";
-    }
-
+        return "base/home";
+    }  
     @GetMapping("/login")
-    public String login(){
-        return "login";
+    public String login(Model model){
+        logger.info("login=============================");
+        SingupForm singupForm=new SingupForm();
+        model.addAttribute("singupForm", singupForm);
+        return "base/login";
     }
 
     @GetMapping("/signup")
@@ -60,7 +47,7 @@ public class homeController {
 
         SingupForm singupForm=new SingupForm();
         model.addAttribute("singupForm", singupForm);
-        return "signup";
+        return "base/signup";
     }
     @PostMapping("/do-singup")
     public String singupProcess(@Valid @ModelAttribute SingupForm singupForm , BindingResult result,HttpSession session) {
@@ -71,7 +58,12 @@ public class homeController {
 			result.addError(
 					new FieldError("singupForm", "confirmPassword", "Password and Confirm Password do not match"));
 		}
+        logger.info("singupForm.getEmail()======{}",singupForm.getEmail());
         Employee dbEmployee = employeeService.findByEmail(singupForm.getEmail());
+
+
+        logger.info("[EmployeeController] ::dbEmployee after findByEmail method " );
+
 		if (dbEmployee != null) {
 			logger.info("[EmployeeController] :: Email Id already there{}",singupForm.getEmail() );
 			result.addError(new FieldError("singupForm", "email", "Email is already registered"));
@@ -81,9 +73,11 @@ public class homeController {
 			return "signup";
 		}
 
+
+       
         employeeService.signup(singupForm);
 
-        
+        logger.info("save singupForm");
 
         Message message = Message.builder().content("Singup Done! wait for ADMIN for verification").type(MessageType.green).build();
 

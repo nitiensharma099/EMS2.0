@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base/base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title data-th-text="${loggedInEmployee.firstName}+' |  EMS'">Profile Page</title>
+  </head>
+  <body>
+    <div id="content">
+
+        <div class="sm:pl-64 pt-20" style="height: 1000px;">
+
+           <div class="grid grid-cols-12">
+            <div class="col-span-3"></div>
+            <div class="col-span-12">Profi
+
+              <div class=" text-center block  p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h1 class="text-2xl font-semibold"> Test</h1>
+              </div>
+            </div>
+           </div>
+          </div>
+          
+    </div>
+    <script>
+      console.log("profile page");
+    </script>
+    <script>
+      console.log("second profile page script");
+    </script>
+  </body>
+</html>

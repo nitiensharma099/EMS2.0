@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html
   lang="en"
-  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+  th:replace="~{base/base :: parent(~{::#content},~{::title},~{::script})}"
 >
   <head>
-    <title>Login Page</title>
+    <title>Home Page</title>
   </head>
   <body>
     <div id="content">
-      <h1>Welcome to Login page</h1>
+      <h1>Welcome to home page</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
         ratione!
       </p>
     </div>
     <script>
-      console.log("Login page");
+      console.log("home page");
     </script>
     <script>
-      console.log("second Login page script");
+      console.log("second home page script");
     </script>
   </body>
 </html>

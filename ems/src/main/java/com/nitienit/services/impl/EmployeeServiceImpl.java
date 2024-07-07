@@ -1,11 +1,11 @@
 package com.nitienit.services.impl;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nitienit.entities.Employee;
@@ -16,6 +16,8 @@ import com.nitienit.services.EmployeeService;
 
 
 
+
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -23,35 +25,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRespositry employeeRespositry;
 
-     @Override
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
     public void signup(SingupForm singupForm) {
 
-        logger.info("HomeServiceImpl ::signup ");
+        logger.info("EmployeeServiceImpl ::signup ");
         
         Employee employee= new Employee();
         employee.setId(generateId(employeeRespositry.findByIdJPA()));
         employee.setEmail(singupForm.getEmail());
-       // employee.setPassword(passwordEncoder.encode(singupForm.getPassword()));
-       employee.setPassword(singupForm.getPassword());
+        logger.info("passwordEncoder.encode(singupForm.getPassword())======{}",passwordEncoder.encode(singupForm.getPassword()));
+        employee.setPassword(passwordEncoder.encode(singupForm.getPassword()));
         employee.setContactNo(singupForm.getContactNo());
          // set the user role
         employee.setRoleList(List.of(Constants.ROLE_USER));
         employeeRespositry.save(employee);
     }
-
-    // @Override
-    // public Employee saveEmployee(Employee employee) {
-
-    //     logger.info("employee======{}",employee.getEmail());
-    //     logger.info("employee======{}",employee.getPassword());
-    //    // logger.info("employee======{}",employee.getRole());
-
-    //     employee.setId(generateId(employeeRespositry.findByIdJPA()));
-        
-    //     return employeeRespositry.save(employee);
-
-       
-    // }
 
     public String generateId(String id) {
         String[] str ;
@@ -101,9 +92,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+  
+
     @Override
     public Employee findByEmail(String email) {
-       return employeeRespositry.findByEmail(email);
+        return employeeRespositry.findByEmail(email);
     }
+
+    
+
+    
 
 }
