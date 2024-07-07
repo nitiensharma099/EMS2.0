@@ -81,20 +81,16 @@ public class homeController {
 			return "signup";
 		}
 
+        employeeService.signup(singupForm);
 
-        Employee employee= new Employee();
-        employee.setEmail(singupForm.getEmail());
-        employee.setPassword(singupForm.getPassword());
-        employee.setContactNo(singupForm.getContactNo());
-        employee.setRole("USER");
-        employeeService.saveEmployee(employee);
+        
 
         Message message = Message.builder().content("Singup Done! wait for ADMIN for verification").type(MessageType.green).build();
 
         session.setAttribute("message", message);
 
         
-        return "success";
+        return "redirect:/signup";
     }
     
 }

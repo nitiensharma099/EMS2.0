@@ -1,5 +1,6 @@
 package com.nitienit.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nitienit.entities.Employee;
+import com.nitienit.forms.SingupForm;
+import com.nitienit.helper.Constants;
 import com.nitienit.repositries.EmployeeRespositry;
 import com.nitienit.services.EmployeeService;
 
@@ -20,19 +23,35 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRespositry employeeRespositry;
 
-    @Override
-    public Employee saveEmployee(Employee employee) {
+     @Override
+    public void signup(SingupForm singupForm) {
 
-        logger.info("employee======{}",employee.getEmail());
-        logger.info("employee======{}",employee.getPassword());
-        logger.info("employee======{}",employee.getRole());
-
-        employee.setId(generateId(employeeRespositry.findByIdJPA()));
+        logger.info("HomeServiceImpl ::signup ");
         
-        return employeeRespositry.save(employee);
+        Employee employee= new Employee();
+        employee.setId(generateId(employeeRespositry.findByIdJPA()));
+        employee.setEmail(singupForm.getEmail());
+       // employee.setPassword(passwordEncoder.encode(singupForm.getPassword()));
+       employee.setPassword(singupForm.getPassword());
+        employee.setContactNo(singupForm.getContactNo());
+         // set the user role
+        employee.setRoleList(List.of(Constants.ROLE_USER));
+        employeeRespositry.save(employee);
+    }
+
+    // @Override
+    // public Employee saveEmployee(Employee employee) {
+
+    //     logger.info("employee======{}",employee.getEmail());
+    //     logger.info("employee======{}",employee.getPassword());
+    //    // logger.info("employee======{}",employee.getRole());
+
+    //     employee.setId(generateId(employeeRespositry.findByIdJPA()));
+        
+    //     return employeeRespositry.save(employee);
 
        
-    }
+    // }
 
     public String generateId(String id) {
         String[] str ;
